@@ -16,8 +16,9 @@ GitHub and Vercel.
 - ✅ **Phase 2 — Space Watch**: near-Earth objects from NASA's NeoWs API,
   labelled Identified vs Flagged (hazardous, very close, very large, or very
   fast), plus reference cards for the three confirmed interstellar visitors.
-- ⬜ **Phase 3 — Latest Signals**: UAP news feed from RSS sources and
-  official reports (AARO).
+- ✅ **Phase 3 — Latest Signals**: aggregated space-news feed from public RSS
+  sources (The Debrief, Space.com, NASA, Universe Today) with UAP-related
+  stories tagged, plus links to official sources (AARO, NASA's UAP study).
 - ⬜ **Phase 4 — Alerts**: email alerts via Resend.
 
 ## Running locally

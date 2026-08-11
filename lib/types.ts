@@ -56,6 +56,21 @@ export interface InterstellarObject {
   facts: string[];
 }
 
+// One item in the Latest Signals news feed, normalised from RSS.
+export interface NewsItem {
+  id: string;
+  title: string;
+  link: string;
+  /** ISO datetime of publication */
+  publishedAt: string;
+  /** Plain-text summary, may be empty */
+  summary: string;
+  /** Which feed it came from, e.g. "The Debrief" */
+  source: string;
+  /** True when the title/summary matches UAP-related keywords */
+  uapSignal: boolean;
+}
+
 export interface SightingFilters {
   /** ISO date string; keep sightings on or after this date */
   dateFrom?: string;

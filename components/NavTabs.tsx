@@ -6,10 +6,11 @@ import { usePathname } from "next/navigation";
 const tabs = [
   { label: "SIGHTINGS MAP", href: "/" },
   { label: "SPACE WATCH", href: "/space-watch" },
+  { label: "LATEST SIGNALS", href: "/latest-signals" },
 ] as const;
 
-// Phase 3 will turn this into a real tab
-const comingSoon = ["LATEST SIGNALS"];
+// Phase 4 (email alerts) has no page of its own yet
+const comingSoon: string[] = [];
 
 export default function NavTabs() {
   const pathname = usePathname();

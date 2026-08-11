@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import NavTabs from "@/components/NavTabs";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,13 +18,6 @@ export const metadata: Metadata = {
   description:
     "Aggregating public sighting reports and space data, filtering out the known, and highlighting the genuinely unexplained.",
 };
-
-// Nav for all planned phases; only the map exists in Phase 1.
-const navItems = [
-  { label: "Sightings Map", href: "/", live: true },
-  { label: "Space Watch", href: "#", live: false },
-  { label: "Latest Signals", href: "#", live: false },
-];
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -45,27 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               </p>
             </div>
 
-            <nav className="flex gap-2 font-mono text-xs tracking-wider">
-              {navItems.map((item) =>
-                item.live ? (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className="rounded-md border border-accent/40 bg-accent-soft px-3 py-2 text-accent"
-                  >
-                    {item.label.toUpperCase()}
-                  </a>
-                ) : (
-                  <span
-                    key={item.label}
-                    title="Coming in a later phase"
-                    className="cursor-not-allowed rounded-md border border-panel-border px-3 py-2 text-muted/60"
-                  >
-                    {item.label.toUpperCase()}
-                  </span>
-                )
-              )}
-            </nav>
+            <NavTabs />
           </div>
         </header>
 

@@ -20,6 +20,42 @@ export interface Sighting {
   source: string;
 }
 
+// A near-Earth object from NASA's NeoWs API, flattened to what the UI needs.
+export interface NeoObject {
+  id: string;
+  name: string;
+  /** ISO date of closest approach to Earth */
+  approachDate: string;
+  /** Human-readable approach time, e.g. "2026-Aug-11 10:57" (UTC) */
+  approachTimeFull: string;
+  /** Estimated diameter range in metres */
+  diameterMinM: number;
+  diameterMaxM: number;
+  /** Speed relative to Earth in km/s */
+  velocityKps: number;
+  /** Closest distance in lunar distances (1 LD = Earth–Moon distance) */
+  missLunar: number;
+  missKm: number;
+  /** NASA's "potentially hazardous asteroid" designation */
+  hazardous: boolean;
+  /** Why this object was flagged as notable; empty = ordinary */
+  flags: string[];
+  /** Link to NASA JPL's page for this object */
+  nasaUrl: string;
+}
+
+// Static reference entry for a confirmed interstellar visitor.
+export interface InterstellarObject {
+  designation: string;
+  nickname: string;
+  discovered: string;
+  discoveredBy: string;
+  classification: string;
+  speedKps: number;
+  status: string;
+  facts: string[];
+}
+
 export interface SightingFilters {
   /** ISO date string; keep sightings on or after this date */
   dateFrom?: string;

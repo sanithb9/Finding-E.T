@@ -13,8 +13,9 @@ GitHub and Vercel.
   interactive Leaflet world map of sighting reports, date/country filters,
   and clickable report details. Ships with sample data modelled on NUFORC
   reports.
-- ⬜ **Phase 2 — Space Watch**: near-Earth objects from NASA's NeoWs API,
-  labelled Identified vs unusual, plus interstellar-object reference cards.
+- ✅ **Phase 2 — Space Watch**: near-Earth objects from NASA's NeoWs API,
+  labelled Identified vs Flagged (hazardous, very close, very large, or very
+  fast), plus reference cards for the three confirmed interstellar visitors.
 - ⬜ **Phase 3 — Latest Signals**: UAP news feed from RSS sources and
   official reports (AARO).
 - ⬜ **Phase 4 — Alerts**: email alerts via Resend.
@@ -38,6 +39,14 @@ Then open http://localhost:3000.
   `getSightings()`, the single function to change when swapping in a live
   data source.
 - `data/` — the bundled sample sightings dataset.
+
+## NASA API key (optional but recommended)
+
+Space Watch works out of the box using NASA's shared `DEMO_KEY`, which has a
+low hourly rate limit. For a personal key (free, instant), fill in the form at
+https://api.nasa.gov, then set `NASA_API_KEY` — locally by copying
+`.env.example` to `.env.local`, on Vercel under Project Settings →
+Environment Variables.
 
 ## Data sources
 

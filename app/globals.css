@@ -1,0 +1,173 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+/* Design tokens: deep-space background, teal/green signal accent */
+:root {
+  --background: #04070f;
+  --panel: #0a1120;
+  --panel-border: #1b2a45;
+  --foreground: #cdd8e3;
+  --muted: #6b7f96;
+  --accent: #2dd4a7;
+  --accent-soft: rgba(45, 212, 167, 0.14);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-panel: var(--panel);
+  --color-panel-border: var(--panel-border);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* ---- Starfield background ----
+   Three layers of tiny radial-gradient "stars" at different densities,
+   drifting at different speeds for a subtle parallax twinkle. */
+.starfield {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse at 50% -20%,
+    #0b1730 0%,
+    var(--background) 60%
+  );
+  overflow: hidden;
+}
+
+.starfield::before,
+.starfield::after {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background-image:
+    radial-gradient(1px 1px at 25% 15%, #ffffff 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 40%, #9fd8ff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 40% 70%, #ffffff 50%, transparent 51%),
+    radial-gradient(1px 1px at 85% 80%, #b5ffe9 50%, transparent 51%),
+    radial-gradient(1px 1px at 10% 55%, #ffffff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 55% 25%, #cfe6ff 50%, transparent 51%),
+    radial-gradient(1px 1px at 92% 12%, #ffffff 50%, transparent 51%),
+    radial-gradient(1px 1px at 33% 92%, #9fd8ff 50%, transparent 51%);
+  background-size: 240px 240px;
+  animation: star-drift 180s linear infinite;
+  opacity: 0.7;
+}
+
+.starfield::after {
+  background-size: 420px 420px;
+  animation-duration: 300s;
+  animation-direction: reverse;
+  opacity: 0.45;
+}
+
+@keyframes star-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(240px, 240px, 0);
+  }
+}
+
+/* Glowing app title */
+.glow-title {
+  text-shadow:
+    0 0 12px rgba(45, 212, 167, 0.55),
+    0 0 48px rgba(45, 212, 167, 0.25);
+}
+
+/* ---- Map pin: pulsing teal beacon (used by Leaflet divIcon) ---- */
+.uap-pin {
+  position: relative;
+  width: 14px;
+  height: 14px;
+}
+
+.uap-pin__dot {
+  position: absolute;
+  inset: 3px;
+  border-radius: 9999px;
+  background: var(--accent);
+  box-shadow: 0 0 8px 2px rgba(45, 212, 167, 0.9);
+}
+
+.uap-pin__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1.5px solid var(--accent);
+  animation: pin-pulse 2.2s ease-out infinite;
+}
+
+@keyframes pin-pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  70% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* ---- Dark-theme overrides for Leaflet's default white popups ---- */
+.leaflet-container {
+  background: #060b16;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--panel);
+  color: var(--foreground);
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 10px;
+}
+
+.leaflet-popup-content {
+  margin: 14px 16px;
+  line-height: 1.5;
+}
+
+.leaflet-popup-close-button {
+  color: var(--muted) !important;
+}
+
+.leaflet-bar a {
+  background: var(--panel);
+  color: var(--foreground);
+  border-color: var(--panel-border);
+}
+
+.leaflet-bar a:hover {
+  background: #14203a;
+  color: var(--accent);
+}
+
+.leaflet-control-attribution {
+  background: rgba(4, 7, 15, 0.75) !important;
+  color: var(--muted) !important;
+}
+
+.leaflet-control-attribution a {
+  color: var(--accent) !important;
+}

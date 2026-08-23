@@ -24,6 +24,12 @@ const officialSources = [
     detail: "NASA's independent UAP study team and report",
     url: "https://science.nasa.gov/uap/",
   },
+  {
+    name: "SETI Institute",
+    detail:
+      "The search for extraterrestrial intelligence — research news (no feed, linked directly)",
+    url: "https://www.seti.org/news",
+  },
 ];
 
 export default async function LatestSignals() {
@@ -44,7 +50,7 @@ export default async function LatestSignals() {
         </p>
       </section>
 
-      <section className="grid gap-3 sm:grid-cols-2">
+      <section className="grid gap-3 sm:grid-cols-3">
         {officialSources.map((s) => (
           <a
             key={s.name}

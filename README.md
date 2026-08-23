@@ -11,8 +11,11 @@ GitHub and Vercel.
 
 - ✅ **Phase 1 — Sightings Map**: dark space-themed homepage with an
   interactive Leaflet world map of sighting reports, date/country filters,
-  and clickable report details. Ships with sample data modelled on NUFORC
-  reports.
+  and clickable report details.
+- ✅ **Phase 5 — Live sightings**: the map now feeds on the ~100 most recent
+  MUFON reports via UFO Stalker's public API, refreshed every 30 minutes,
+  with the bundled sample dataset as an automatic fallback. (NUFORC offers
+  no API and blocks automated access.)
 - ✅ **Phase 2 — Space Watch**: near-Earth objects from NASA's NeoWs API,
   labelled Identified vs Flagged (hazardous, very close, very large, or very
   fast), plus reference cards for the three confirmed interstellar visitors.
@@ -55,7 +58,7 @@ Environment Variables.
 
 ## Data sources
 
-Phase 1 uses a bundled sample dataset in the style of NUFORC (National UFO
-Reporting Center) reports, since NUFORC has no official public API. The data
-layer (`lib/sightings.ts`) is the only file that needs to change to plug in a
-live source. Map tiles: CARTO dark basemap © OpenStreetMap contributors.
+Sightings: live MUFON reports via UFO Stalker's public API, with a bundled
+sample dataset as fallback (`lib/sightings.ts` is the single place to change
+sources). Space Watch: NASA NeoWs. Latest Signals & Declassified: public RSS
+feeds. Map tiles: CARTO dark basemap © OpenStreetMap contributors.

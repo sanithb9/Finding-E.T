@@ -19,6 +19,10 @@ GitHub and Vercel.
 - ✅ **Phase 3 — Latest Signals**: aggregated space-news feed from public RSS
   sources (The Debrief, Space.com, NASA, Universe Today) with UAP-related
   stories tagged, plus links to official sources (AARO, NASA's UAP study).
+- ✅ **Declassified**: recently released US government records via The Black
+  Vault's FOIA archive feed, with UAP-related releases tagged, plus links to
+  official collections (AARO, National Archives UAP Records, CIA Reading
+  Room).
 - ⬜ **Phase 4 — Alerts**: email alerts via Resend.
 
 ## Running locally

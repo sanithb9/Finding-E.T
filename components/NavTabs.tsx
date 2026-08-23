@@ -7,6 +7,7 @@ const tabs = [
   { label: "SIGHTINGS MAP", href: "/" },
   { label: "SPACE WATCH", href: "/space-watch" },
   { label: "LATEST SIGNALS", href: "/latest-signals" },
+  { label: "DECLASSIFIED", href: "/declassified" },
 ] as const;
 
 // Phase 4 (email alerts) has no page of its own yet

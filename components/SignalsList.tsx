@@ -15,7 +15,17 @@ function formatWhen(iso: string): string {
   });
 }
 
-export default function SignalsList({ items }: { items: NewsItem[] }) {
+interface SignalsListProps {
+  items: NewsItem[];
+  toggleLabel?: string;
+  emptyMessage?: string;
+}
+
+export default function SignalsList({
+  items,
+  toggleLabel = "UAP signals only",
+  emptyMessage = "No UAP-tagged items in the current feed window — the sky is quiet. Untick the filter to see all items.",
+}: SignalsListProps) {
   const [signalsOnly, setSignalsOnly] = useState(false);
 
   const visible = signalsOnly ? items.filter((i) => i.uapSignal) : items;
@@ -31,7 +41,7 @@ export default function SignalsList({ items }: { items: NewsItem[] }) {
             onChange={(e) => setSignalsOnly(e.target.checked)}
             className="h-4 w-4 accent-[var(--accent)]"
           />
-          UAP signals only
+          {toggleLabel}
         </label>
         <p className="font-mono text-xs tracking-wider text-accent">
           {visible.length} SHOWN · {signalCount} SIGNALS
@@ -77,8 +87,7 @@ export default function SignalsList({ items }: { items: NewsItem[] }) {
 
       {visible.length === 0 && (
         <p className="rounded-lg border border-panel-border bg-panel/70 p-6 text-center text-sm text-muted">
-          No UAP-tagged items in the current feed window — the sky is quiet.
-          Untick the filter to see all space news.
+          {emptyMessage}
         </p>
       )}
     </div>

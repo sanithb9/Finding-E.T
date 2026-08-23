@@ -1,15 +1,23 @@
 import { XMLParser } from "fast-xml-parser";
 import type { NewsItem } from "@/lib/types";
 
-// Data-access layer for the Latest Signals feed. Aggregates public RSS
-// feeds server-side, so no keys and no client-side CORS issues. Adding or
-// removing a source is a one-line change to SOURCES.
+// Shared RSS aggregation layer. Both the Latest Signals page and the
+// Declassified page use aggregateRssSources() with their own source lists —
+// adding or removing a source is a one-line change to the relevant list.
 
-const SOURCES: Array<{ name: string; url: string }> = [
+export interface RssSource {
+  name: string;
+  url: string;
+}
+
+const NEWS_SOURCES: RssSource[] = [
   { name: "The Debrief", url: "https://thedebrief.org/feed/" },
   { name: "Space.com", url: "https://www.space.com/feeds/all" },
   { name: "NASA", url: "https://www.nasa.gov/rss/dyn/breaking_news.rss" },
   { name: "Universe Today", url: "https://www.universetoday.com/feed/" },
+  // SETI-adjacent: the SETI Institute itself publishes no RSS feed, so this
+  // long-running deep-space/SETI blog stands in as the closest reliable feed
+  { name: "Centauri Dreams", url: "https://www.centauri-dreams.org/feed/" },
 ];
 
 // The "net" for news: anything matching these is tagged as a UAP signal.
@@ -61,10 +69,7 @@ function text(v: string | { "#text"?: string } | undefined): string {
   return typeof v === "string" ? v : (v["#text"] ?? "");
 }
 
-async function fetchSource(source: {
-  name: string;
-  url: string;
-}): Promise<NewsItem[]> {
+async function fetchSource(source: RssSource): Promise<NewsItem[]> {
   const res = await fetch(source.url, {
     // Refresh each feed at most every 30 minutes
     next: { revalidate: 1800 },
@@ -106,18 +111,37 @@ export interface SignalsFeed {
   failedSources: string[];
 }
 
-export async function getLatestSignals(): Promise<SignalsFeed> {
+export async function aggregateRssSources(
+  sources: RssSource[],
+  limit = 60,
+  // Cap per source so prolific daily feeds can't drown out weekly ones —
+  // without this, a 100-item feed pushes a 10-item feed out of the cut
+  perSourceLimit = 12
+): Promise<SignalsFeed> {
   // Fetch all sources in parallel; one broken feed shouldn't sink the page
-  const results = await Promise.allSettled(SOURCES.map(fetchSource));
+  const results = await Promise.allSettled(
+    sources.map(async (s) => {
+      const items = await fetchSource(s);
+      if (items.length === 0)
+        throw new Error(`${s.name} returned no parseable items`);
+      return items
+        .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+        .slice(0, perSourceLimit);
+    })
+  );
 
   const items = results
     .flatMap((r) => (r.status === "fulfilled" ? r.value : []))
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
-    .slice(0, 60);
+    .slice(0, limit);
 
-  const failedSources = SOURCES.filter(
+  const failedSources = sources.filter(
     (_, i) => results[i].status === "rejected"
   ).map((s) => s.name);
 
   return { items, failedSources };
+}
+
+export function getLatestSignals(): Promise<SignalsFeed> {
+  return aggregateRssSources(NEWS_SOURCES);
 }

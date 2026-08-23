@@ -1,6 +1,9 @@
 import SightingsExplorer from "@/components/SightingsExplorer";
 import { getSightings } from "@/lib/sightings";
 
+// Re-render at most every 30 minutes so new reports appear automatically
+export const revalidate = 1800;
+
 export default async function Home() {
   const sightings = await getSightings();
 
@@ -11,9 +14,10 @@ export default async function Home() {
           PHASE 1 · SIGHTINGS MAP
         </h2>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-foreground/80">
-          Recent reports of unidentified objects from public sighting records.
-          Each beacon is one report — filter by date or country, and click a
-          beacon to read what the witness described.
+          The latest reports of unidentified objects, live from MUFON&apos;s
+          worldwide reporting network and refreshed every half hour. Each
+          beacon is one report — filter by date or country, and click a beacon
+          to read what the witness described.
         </p>
       </section>
 

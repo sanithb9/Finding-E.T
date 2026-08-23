@@ -48,8 +48,9 @@ export default function SightingsExplorer({
       </div>
 
       <p className="text-xs text-muted">
-        Click a beacon for the report details. Sample data modelled on NUFORC
-        reports — a live feed can replace it without changing this page.
+        Click a beacon for the report details. Live reports from MUFON (Mutual
+        UFO Network) via UFO Stalker; if the live source is unreachable, a
+        bundled sample dataset keeps the map running.
       </p>
     </div>
   );

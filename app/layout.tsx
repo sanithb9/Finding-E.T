@@ -48,8 +48,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
 
         <footer className="border-t border-panel-border/60 py-4 text-center text-xs text-muted">
-          Finding E.T aggregates public reports — it does not detect objects
-          itself. Phase 1 uses sample data in the style of NUFORC reports.
+          Finding E.T aggregates public reports and data feeds — it does not
+          detect objects itself. Sighting reports © their submitters via MUFON.
         </footer>
       </body>
     </html>
